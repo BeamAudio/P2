@@ -144,9 +144,9 @@ A continuación se muestra la captura de WaveSurfer utilizada para el etiquetado
 
 A partir de esta gráfica podemos responder a las cuestiones planteadas.
 
-- A la vista de la gráfica, indique qué valores considera adecuados para las magnitudes siguientes:
+-A la vista de la gráfica, indique qué valores considera adecuados para las magnitudes siguientes:
 
-	* Incremento del nivel potencia en dB, respecto al nivel correspondiente al silencio inicial, para
+	-Incremento del nivel potencia en dB, respecto al nivel correspondiente al silencio inicial, para
 	  estar seguros de que un segmento de señal se corresponde con voz.
    
    En el silencio inicial la curva de potencia se mantiene aproximadamente alrededor de **35 dB**, mientras que en los tramos donde claramente hay voz la potencia sube a valores cercanos a **55–60 dB**.
@@ -154,9 +154,9 @@ A partir de esta gráfica podemos responder a las cuestiones planteadas.
 Teniendo en cuenta esta diferencia, proponemos considerar que un segmento corresponde a **voz** cuando su nivel de potencia está **al menos unos 15–20 dB por encima** del nivel de potencia del silencio inicial.  
 Con este margen seguimos detectando bien la voz y, al mismo tiempo, evitamos que pequeñas variaciones del ruido de fondo se clasifiquen como voz por error.
 
-	* Duración mínima razonable de los segmentos de voz y silencio.
+	-Duración mínima razonable de los segmentos de voz y silencio.
 
-	Mirando los segmentos etiquetados y el eje de tiempo, se observa que:
+Mirando los segmentos etiquetados y el eje de tiempo, se observa que:
 
 - Los tramos de **voz** que tienen sentido como palabra o grupo de palabras suelen durar **más de 0.2–0.3 s**.
 - Los tramos de **silencio** relevantes (pausas entre frases o bloques) suelen ser de **al menos 0.15–0.2 s**.
@@ -168,9 +168,9 @@ Por ello, como valores razonables para el detector proponemos:
 
 De esta forma se evitan decisiones basadas en ruidos muy breves o transitorios que no representan realmente voz o silencio.
 
-	* ¿Es capaz de sacar alguna conclusión a partir de la evolución de la tasa de cruces por cero?
+	-¿Es capaz de sacar alguna conclusión a partir de la evolución de la tasa de cruces por cero?
 
-	La tasa de cruces por cero (zero-crossing rate) está relacionada con lo “rápida” que es la señal, es decir, con cuántas veces cambia de signo:
+La tasa de cruces por cero (zero-crossing rate) está relacionada con lo “rápida” que es la señal, es decir, con cuántas veces cambia de signo:
 
 - En **voz sonora** (vocales y consonantes sonoras) la forma de onda es más suave y periódica, por lo que la tasa de cruces por cero tiende a ser **más baja**.
 - En **segmentos ruidosos** o en **consonantes sordas**, aparecen muchos cambios rápidos de signo y la tasa de cruces por cero es **más alta**, incluso aunque la potencia pueda ser parecida.
