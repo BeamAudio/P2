@@ -1,6 +1,6 @@
 #!/bin/bash
 
-alpha1=${1:-6}
+alpha1=${1:-10.8}
 
 # Be sure that this file has execution permissions:
 # Use the nautilus explorer or chmod +x run_vad.sh

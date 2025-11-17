@@ -96,7 +96,13 @@ int main(int argc, char *argv[]) {
     }
 
     if (sndfile_out != 0) {
-      /* TODO: go back and write zeros in silence segments */
+      if (state == ST_VOICE) {
+        // Write the original audio buffer
+        sf_write_float(sndfile_out, buffer, n_read);
+      } else {
+        // Write the silence buffer
+        sf_write_float(sndfile_out, buffer_zeros, n_read);
+      }
     }
   }
 
