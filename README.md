@@ -138,15 +138,45 @@ Ejercicios
   continuación, una captura de `wavesurfer` en la que se vea con claridad la señal temporal, el contorno de
   potencia y la tasa de cruces por cero, junto con el etiquetado manual de los segmentos.
 
+A continuación se muestra la captura de WaveSurfer utilizada para el etiquetado manual de los segmentos de voz y silencio, donde se ve la señal temporal, el contorno de potencia y la pista de etiquetas S/V:
+
+![Captura de WaveSurfer con etiquetado de voz y silencio](img/labels_con_transciones_potencia.png)
+
+A partir de esta gráfica podemos responder a las cuestiones planteadas.
 
 - A la vista de la gráfica, indique qué valores considera adecuados para las magnitudes siguientes:
 
 	* Incremento del nivel potencia en dB, respecto al nivel correspondiente al silencio inicial, para
 	  estar seguros de que un segmento de señal se corresponde con voz.
+   
+   En el silencio inicial la curva de potencia se mantiene aproximadamente alrededor de **35 dB**, mientras que en los tramos donde claramente hay voz la potencia sube a valores cercanos a **55–60 dB**.
+
+Teniendo en cuenta esta diferencia, proponemos considerar que un segmento corresponde a **voz** cuando su nivel de potencia está **al menos unos 15–20 dB por encima** del nivel de potencia del silencio inicial.  
+Con este margen seguimos detectando bien la voz y, al mismo tiempo, evitamos que pequeñas variaciones del ruido de fondo se clasifiquen como voz por error.
 
 	* Duración mínima razonable de los segmentos de voz y silencio.
 
+	Mirando los segmentos etiquetados y el eje de tiempo, se observa que:
+
+- Los tramos de **voz** que tienen sentido como palabra o grupo de palabras suelen durar **más de 0.2–0.3 s**.
+- Los tramos de **silencio** relevantes (pausas entre frases o bloques) suelen ser de **al menos 0.15–0.2 s**.
+
+Por ello, como valores razonables para el detector proponemos:
+
+- **Duración mínima de voz:** alrededor de **0.2–0.3 s**  
+- **Duración mínima de silencio:** alrededor de **0.15–0.2 s**
+
+De esta forma se evitan decisiones basadas en ruidos muy breves o transitorios que no representan realmente voz o silencio.
+
 	* ¿Es capaz de sacar alguna conclusión a partir de la evolución de la tasa de cruces por cero?
+
+	La tasa de cruces por cero (zero-crossing rate) está relacionada con lo “rápida” que es la señal, es decir, con cuántas veces cambia de signo:
+
+- En **voz sonora** (vocales y consonantes sonoras) la forma de onda es más suave y periódica, por lo que la tasa de cruces por cero tiende a ser **más baja**.
+- En **segmentos ruidosos** o en **consonantes sordas**, aparecen muchos cambios rápidos de signo y la tasa de cruces por cero es **más alta**, incluso aunque la potencia pueda ser parecida.
+
+Por tanto, la evolución de la tasa de cruces por cero se puede utilizar como **información complementaria** a la potencia:  
+ayuda a distinguir mejor entre voz sonora y ruido/segmentos no sonoros en aquellas zonas en las que solo con el nivel de potencia la decisión podría ser dudosa.
 
 
 ### Desarrollo del detector de actividad vocal
@@ -196,41 +226,9 @@ el usado, sin más opciones, para realizar la evaluación *ciega* del sistema.
 
 
 
-### Etiquetado manual de los segmentos de voz y silencio
 
-A continuación se muestra la captura de WaveSurfer utilizada para el etiquetado manual de los segmentos de voz y silencio, donde se ve la señal temporal, el contorno de potencia y la pista de etiquetas S/V:
 
-![Captura de WaveSurfer con etiquetado de voz y silencio](img/labels_con_transciones_potencia.png)
 
-A partir de esta gráfica podemos responder a las cuestiones planteadas.
 
-#### Incremento del nivel de potencia en dB
 
-En el silencio inicial la curva de potencia se mantiene aproximadamente alrededor de **35 dB**, mientras que en los tramos donde claramente hay voz la potencia sube a valores cercanos a **55–60 dB**.
 
-Teniendo en cuenta esta diferencia, proponemos considerar que un segmento corresponde a **voz** cuando su nivel de potencia está **al menos unos 15–20 dB por encima** del nivel de potencia del silencio inicial.  
-Con este margen seguimos detectando bien la voz y, al mismo tiempo, evitamos que pequeñas variaciones del ruido de fondo se clasifiquen como voz por error.
-
-#### Duración mínima razonable de los segmentos de voz y silencio
-
-Mirando los segmentos etiquetados y el eje de tiempo, se observa que:
-
-- Los tramos de **voz** que tienen sentido como palabra o grupo de palabras suelen durar **más de 0.2–0.3 s**.
-- Los tramos de **silencio** relevantes (pausas entre frases o bloques) suelen ser de **al menos 0.15–0.2 s**.
-
-Por ello, como valores razonables para el detector proponemos:
-
-- **Duración mínima de voz:** alrededor de **0.2–0.3 s**  
-- **Duración mínima de silencio:** alrededor de **0.15–0.2 s**
-
-De esta forma se evitan decisiones basadas en ruidos muy breves o transitorios que no representan realmente voz o silencio.
-
-#### Conclusiones a partir de la tasa de cruces por cero
-
-La tasa de cruces por cero (zero-crossing rate) está relacionada con lo “rápida” que es la señal, es decir, con cuántas veces cambia de signo:
-
-- En **voz sonora** (vocales y consonantes sonoras) la forma de onda es más suave y periódica, por lo que la tasa de cruces por cero tiende a ser **más baja**.
-- En **segmentos ruidosos** o en **consonantes sordas**, aparecen muchos cambios rápidos de signo y la tasa de cruces por cero es **más alta**, incluso aunque la potencia pueda ser parecida.
-
-Por tanto, la evolución de la tasa de cruces por cero se puede utilizar como **información complementaria** a la potencia:  
-ayuda a distinguir mejor entre voz sonora y ruido/segmentos no sonoros en aquellas zonas en las que solo con el nivel de potencia la decisión podría ser dudosa.
